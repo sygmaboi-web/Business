@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Watermark Foto</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Load library JSZip dari CDN untuk fitur download file ZIP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h2>✨ Auto Watermark Generator</h2>
 
+        <!-- Pilihan Tipe Watermark -->
         <div class="input-group">
             <label>Pilih Tipe Watermark:</label>
             <div class="radio-group">
@@ -18,22 +21,28 @@
             </div>
         </div>
 
+        <!-- Input Teks -->
         <div class="input-group" id="textInputGroup">
             <label for="watermarkText">Teks Watermark:</label>
             <input type="text" id="watermarkText" value="© Hak Cipta 2026">
         </div>
 
+        <!-- Input Gambar PNG -->
         <div class="input-group" id="imageInputGroup" style="display: none;">
             <label for="logoInput">Upload Logo Watermark (PNG):</label>
             <input type="file" id="logoInput" accept="image/png">
         </div>
 
+        <!-- Input Folder Target -->
         <div class="input-group">
             <label for="folderInput">📂 Pilih Folder Foto (Target):</label>
             <input type="file" id="folderInput" webkitdirectory directory multiple>
         </div>
 
         <button id="processBtn">🚀 Proses Foto</button>
+        
+        <!-- Tombol Download ZIP (Sembunyi otomatis sebelum proses selesai) -->
+        <button id="downloadZipBtn" style="display: none; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); margin-top: 15px;">📦 Download Semua (ZIP)</button>
     </div>
 
     <div id="gallery"></div>

@@ -112,7 +112,7 @@ function processImage(file, wmType, text, logoImg) {
 
                 if (wmType === 'text') {
                     // Logika watermark teks
-                    const fontSize = Math.max(14, Math.floor(img.height * 0.03));
+                    const fontSize = Math.max(14, Math.floor(img.height * 0.07));
                     ctx.font = `bold ${fontSize}px 'Poppins', sans-serif`;
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
                     ctx.textAlign = 'center';

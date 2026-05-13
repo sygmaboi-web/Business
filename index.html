@@ -4,31 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Watermark Foto</title>
-    <!-- Manggil file CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="container">
-        <h2>Auto Watermark Generator</h2>
-        
+        <h2>✨ Auto Watermark Generator</h2>
+
         <div class="input-group">
+            <label>Pilih Tipe Watermark:</label>
+            <div class="radio-group">
+                <label><input type="radio" name="wmType" value="text" checked> Teks</label>
+                <label><input type="radio" name="wmType" value="image"> Gambar (PNG)</label>
+            </div>
+        </div>
+
+        <div class="input-group" id="textInputGroup">
             <label for="watermarkText">Teks Watermark:</label>
-            <input type="text" id="watermarkText" value="© Hak Cipta 2026" placeholder="Masukkan teks watermark kamu">
+            <input type="text" id="watermarkText" value="© Hak Cipta 2026">
+        </div>
+
+        <div class="input-group" id="imageInputGroup" style="display: none;">
+            <label for="logoInput">Upload Logo Watermark (PNG):</label>
+            <input type="file" id="logoInput" accept="image/png">
         </div>
 
         <div class="input-group">
-            <label for="folderInput">Pilih Folder Foto:</label>
-            <!-- webkitdirectory memungkinkan pemilihan folder -->
+            <label for="folderInput">📂 Pilih Folder Foto (Target):</label>
             <input type="file" id="folderInput" webkitdirectory directory multiple>
         </div>
 
-        <button id="processBtn">Proses Foto</button>
+        <button id="processBtn">🚀 Proses Foto</button>
     </div>
 
     <div id="gallery"></div>
 
-    <!-- Manggil file JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>

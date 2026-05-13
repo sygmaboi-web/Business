@@ -111,8 +111,8 @@ function processImage(file, wmType, text, logoImg) {
                 const x = canvas.width / 2;
 
                 if (wmType === 'text') {
-                    // Logika watermark teks
-                    const fontSize = Math.max(14, Math.floor(img.height * 0.07));
+                    // DI SINI UBAHNYA: Skala teks dinaikin jadi 5% (0.05) dari tinggi gambar
+                    const fontSize = Math.max(16, Math.floor(img.height * 0.05));
                     ctx.font = `bold ${fontSize}px 'Poppins', sans-serif`;
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
                     ctx.textAlign = 'center';
@@ -128,8 +128,8 @@ function processImage(file, wmType, text, logoImg) {
                     ctx.fillText(text, x, y);
 
                 } else if (wmType === 'image' && logoImg) {
-                    // Logika watermark gambar (PNG)
-                    const targetLogoHeight = Math.max(30, img.height * 0.8); 
+                    // DI SINI UBAHNYA: Skala logo gambar dinaikin jadi 15% (0.15) dari tinggi gambar
+                    const targetLogoHeight = Math.max(40, img.height * 0.15); 
                     const scaleRatio = targetLogoHeight / logoImg.height;
                     const targetLogoWidth = logoImg.width * scaleRatio;
 

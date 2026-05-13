@@ -129,7 +129,7 @@ function processImage(file, wmType, text, logoImg) {
 
                 } else if (wmType === 'image' && logoImg) {
                     // Logika watermark gambar (PNG)
-                    const targetLogoHeight = Math.max(30, img.height * 0.1); 
+                    const targetLogoHeight = Math.max(30, img.height * 0.8); 
                     const scaleRatio = targetLogoHeight / logoImg.height;
                     const targetLogoWidth = logoImg.width * scaleRatio;
 

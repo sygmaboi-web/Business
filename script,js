@@ -1,0 +1,96 @@
+const folderInput = document.getElementById('folderInput');
+const watermarkText = document.getElementById('watermarkText');
+const processBtn = document.getElementById('processBtn');
+const gallery = document.getElementById('gallery');
+
+processBtn.addEventListener('click', async () => {
+    const files = folderInput.files;
+    
+    if (files.length === 0) {
+        alert('Pilih folder yang berisi foto terlebih dahulu!');
+        return;
+    }
+
+    // Bersihkan galeri sebelum memproses yang baru
+    gallery.innerHTML = '';
+    processBtn.innerText = 'Memproses...';
+    processBtn.disabled = true;
+
+    for(let file of files) {
+        // Pastikan yang diproses cuma file gambar
+        if(file.type.startsWith('image/')) {
+            await processImage(file, watermarkText.value);
+        }
+    }
+
+    processBtn.innerText = 'Proses Foto';
+    processBtn.disabled = false;
+});
+
+function processImage(file, text) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                // Bikin elemen canvas virtual
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+
+                // Gambar foto asli ke canvas
+                ctx.drawImage(img, 0, 0);
+
+                // Setup Watermark
+                // Ukuran font otomatis menyesuaikan: ~3% dari tinggi foto, minimal 14px
+                const fontSize = Math.max(14, Math.floor(img.height * 0.03));
+                ctx.font = `bold ${fontSize}px Arial`;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)'; // Warna putih semi-transparan
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+
+                // Posisi: Tengah (X) dan Bawah (Y), dengan sedikit margin (jarak) dari bawah
+                const x = canvas.width / 2;
+                const y = canvas.height - (fontSize * 0.5);
+
+                // Tambahkan shadow hitam tipis biar watermark tetap kebaca di foto yang terang
+                ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
+                ctx.shadowBlur = 4;
+                ctx.shadowOffsetX = 1;
+                ctx.shadowOffsetY = 1;
+
+                // Terapkan teks watermark ke gambar
+                ctx.fillText(text, x, y);
+
+                // Konversi hasil canvas jadi URL gambar
+                const dataUrl = canvas.toDataURL(file.type, 0.9); // Kualitas 90%
+
+                // Tampilkan di UI
+                displayResult(dataUrl, file.name);
+                resolve();
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function displayResult(dataUrl, originalName) {
+    const card = document.createElement('div');
+    card.className = 'image-card';
+
+    const imgPreview = document.createElement('img');
+    imgPreview.src = dataUrl;
+
+    const downloadLink = document.createElement('a');
+    downloadLink.href = dataUrl;
+    downloadLink.download = `WM_${originalName}`;
+    downloadLink.innerText = 'Download';
+    downloadLink.className = 'download-btn';
+
+    card.appendChild(imgPreview);
+    card.appendChild(downloadLink);
+    gallery.appendChild(card);
+}
